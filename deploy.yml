@@ -16,3 +16,14 @@
     - name: Run Docker container UniStudio
       ansible.builtin.shell: >
         docker run -v /etc/localtime:/etc/localtime:ro -d --net=host --restart=always -tid --name UniStudio --privileged=true unistudio /sbin/init
+
+    - name: Transfer license file to Docker container
+      ansible.builtin.shell: >
+        docker cp license.lic UniStudio:/home/UniStudio/licenses/license.lic
+
+    - name: Run npm start development inside the Docker container
+      ansible.builtin.shell: >
+        docker exec UniStudio /bin/bash -c "cd /home/UniStudio && npm run start:dev"
+
+    - name: Restart Docker container UniStudio
+      ansible.builtin.shell: docker restart UniStudio
