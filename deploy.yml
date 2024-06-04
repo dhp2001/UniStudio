@@ -33,6 +33,16 @@
         cmd: >
           docker cp /tmp/license.lic UniStudio:/home/UniStudio/licenses/
 
+    - name: Install npm dependencies in UniStudio/Client folder
+      ansible.builtin.shell:
+        cmd: >
+          docker exec UniStudio /bin/bash -c "cd /home/UniStudio/Client && npm install"
+
+    - name: Install npm dependencies in UniStudio folder
+      ansible.builtin.shell:
+        cmd: >
+          docker exec UniStudio /bin/bash -c "cd /home/UniStudio && npm install"
+
     - name: Run npm start development inside the Docker container
       ansible.builtin.shell:
         cmd: >
